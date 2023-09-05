@@ -14,4 +14,14 @@ const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const UserController = { getAllFromDB };
+const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
+  const result = await UserService.getByIdFromDB(req.params.id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User retrieved successfully!',
+    data: result,
+  });
+});
+
+export const UserController = { getAllFromDB, getByIdFromDB };
