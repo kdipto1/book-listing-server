@@ -3,10 +3,10 @@ import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
-import { UserService } from './auth.service';
+import { AuthService } from './auth.service';
 
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
-  const result = await UserService.insertIntoDB(req.body);
+  const result = await AuthService.insertIntoDB(req.body);
   sendResponse<User>(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -15,7 +15,7 @@ const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 const signin = catchAsync(async (req: Request, res: Response) => {
-  const result = await UserService.signin(req.body);
+  const result = await AuthService.signin(req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -24,4 +24,4 @@ const signin = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const UserController = { insertIntoDB, signin };
+export const AuthController = { insertIntoDB, signin };

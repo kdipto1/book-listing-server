@@ -14,6 +14,15 @@ const insertIntoDB = async (payload: User) => {
   );
   const result = await prisma.user.create({
     data: payload,
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      contactNo: true,
+      address: true,
+      profileImg: true,
+    },
   });
   return result;
 };
@@ -43,4 +52,4 @@ const signin = async (payload: Partial<User>): Promise<string> => {
   return token;
 };
 
-export const UserService = { insertIntoDB, signin };
+export const AuthService = { insertIntoDB, signin };
