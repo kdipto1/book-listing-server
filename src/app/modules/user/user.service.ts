@@ -1,7 +1,9 @@
 import { User } from '@prisma/client';
 import bcrypt from 'bcrypt';
+import httpStatus from 'http-status';
 import { Secret } from 'jsonwebtoken';
 import config from '../../../config';
+import ApiError from '../../../errors/ApiError';
 import { jwtHelpers } from '../../../helpers/jwtHelpers';
 import prisma from '../../../shared/prisma';
 
@@ -23,6 +25,16 @@ const signin = async (payload: Partial<User>): Promise<string> => {
     },
   });
   const { id: userId, role } = isUserExists;
+  if (!payload.password && !payload.password?.length)
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect password');
+
+  const isPasswordMatched = await bcrypt.compare(
+    payload.password,
+    isUserExists.password,
+  );
+  if (!isPasswordMatched)
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect password!');
+
   const token = jwtHelpers.createToken(
     { userId, role },
     config.jwt.secret as Secret,

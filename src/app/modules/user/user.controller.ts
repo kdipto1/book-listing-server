@@ -14,5 +14,14 @@ const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const signin = catchAsync(async (req: Request, res: Response) => {
+  const result = await UserService.signin(req.body);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User signin successfully!',
+    data: result,
+  });
+});
 
-export const UserController = { insertIntoDB };
+export const UserController = { insertIntoDB, signin };
