@@ -19,6 +19,7 @@
     "src/**/*.ts": "pnpm lint-prettier"
   },
   "dependencies": {
+    "@prisma/client": "5.2.0",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -41,6 +42,7 @@
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
+    "prisma": "^5.2.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.2.2"
   }
