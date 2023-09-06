@@ -8,4 +8,9 @@ const insertIntoDB = async (payload: Category) => {
   return result;
 };
 
-export const CategoryService = { insertIntoDB };
+const getAllFromDB = async () => {
+  const result = await prisma.category.findMany();
+  return result;
+};
+
+export const CategoryService = { insertIntoDB, getAllFromDB };

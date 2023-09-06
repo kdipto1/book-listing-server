@@ -10,5 +10,6 @@ router.post(
   auth(ENUM_USER_ROLE.ADMIN),
   CategoryController.insertIntoDB,
 );
+router.get('/', CategoryController.getAllFromDB);
 
 export const CategoryRoutes = router;
