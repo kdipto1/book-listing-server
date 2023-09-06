@@ -11,4 +11,6 @@ router.post(
   BookController.insertIntoDB,
 );
 
+router.get('/', BookController.getAllFromDB);
+
 export const BookRoutes = router;
