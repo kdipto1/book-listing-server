@@ -23,4 +23,18 @@ const getById = async (id: string) => {
   return result;
 };
 
-export const CategoryService = { insertIntoDB, getAllFromDB, getById };
+const updateById = async (id: string, payload: Category) => {
+  const result = await prisma.category.update({
+    where: { id },
+    data: payload,
+    select: { id: true, title: true },
+  });
+  return result;
+};
+
+export const CategoryService = {
+  insertIntoDB,
+  getAllFromDB,
+  getById,
+  updateById,
+};
