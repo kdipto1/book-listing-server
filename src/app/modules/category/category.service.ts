@@ -13,4 +13,14 @@ const getAllFromDB = async () => {
   return result;
 };
 
-export const CategoryService = { insertIntoDB, getAllFromDB };
+const getById = async (id: string) => {
+  const result = prisma.category.findUniqueOrThrow({
+    where: {
+      id: id,
+    },
+    include: { books: true },
+  });
+  return result;
+};
+
+export const CategoryService = { insertIntoDB, getAllFromDB, getById };
