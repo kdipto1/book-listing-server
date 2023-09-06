@@ -25,6 +25,7 @@ const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
     'maxPrice',
     'category',
   ]);
+
   const options = pick(req.query, ['page', 'size', 'sortBy', 'sortOrder']);
   const result = await BookService.getAllFromDB(filters, options);
   sendResponse(res, {
@@ -35,4 +36,18 @@ const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const BookController = { insertIntoDB, getAllFromDB };
+const getByCategory = catchAsync(async (req: Request, res: Response) => {
+  const options = pick(req.query, ['page', 'size', 'sortBy', 'sortOrder']);
+  const result = await BookService.getByCategory(
+    req.params.categoryId,
+    options,
+  );
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Books fetched successfully!',
+    data: result,
+  });
+});
+
+export const BookController = { insertIntoDB, getAllFromDB, getByCategory };

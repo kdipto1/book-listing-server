@@ -74,6 +74,7 @@ const getAllFromDB = async (
     where: whereConditions,
     skip,
     take: limit,
+    include: { category: true },
     orderBy:
       options.sortBy && options.sortOrder
         ? {
@@ -84,14 +85,46 @@ const getAllFromDB = async (
 
   const total = await prisma.book.count({ where: whereConditions });
 
+  const totalPages = Math.ceil(total / limit);
   return {
     meta: {
-      total,
       page,
-      limit,
+      size: limit,
+      total,
+      totalPages,
     },
     data: result,
   };
 };
 
-export const BookService = { insertIntoDB, getAllFromDB };
+const getByCategory = async (id: string, options: IPaginationOptions) => {
+  const { page, limit, skip } = paginationHelpers.calculatePagination(options);
+
+  const result = await prisma.book.findMany({
+    where: { categoryId: id },
+    skip,
+    take: limit,
+    include: { category: true },
+    orderBy:
+      options.sortBy && options.sortOrder
+        ? {
+            [options.sortBy]: options.sortOrder,
+          }
+        : { createdAt: 'desc' },
+  });
+
+  const total = await prisma.book.count({ where: { categoryId: id } });
+
+  const totalPages = Math.ceil(total / limit);
+  return {
+    meta: {
+      page,
+      size: limit,
+      total,
+      totalPages,
+    },
+    data: result,
+  };
+};
+
+export const BookService = { insertIntoDB, getAllFromDB, getByCategory };
