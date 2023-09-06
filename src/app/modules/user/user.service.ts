@@ -66,8 +66,34 @@ const updateById = async (id: string, payload: Partial<User>) => {
   return result;
 };
 
+const deleteById = async (id: string) => {
+  const isUserExists = await prisma.user.findUnique({
+    where: {
+      id: id,
+    },
+  });
+  if (!isUserExists)
+    throw new ApiError(httpStatus.NOT_EXTENDED, 'User not found with this id');
+  const result = await prisma.user.delete({
+    where: {
+      id: id,
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      contactNo: true,
+      address: true,
+      profileImg: true,
+    },
+  });
+  return result;
+};
+
 export const UserService = {
   getAllFromDB,
   getByIdFromDB,
   updateById,
+  deleteById,
 };
