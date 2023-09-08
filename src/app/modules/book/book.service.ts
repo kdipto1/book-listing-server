@@ -127,4 +127,18 @@ const getByCategory = async (id: string, options: IPaginationOptions) => {
   };
 };
 
-export const BookService = { insertIntoDB, getAllFromDB, getByCategory };
+const getById = async (id: string) => {
+  const result = await prisma.book.delete({
+    where: {
+      id: id,
+    },
+  });
+  return result;
+};
+
+export const BookService = {
+  insertIntoDB,
+  getAllFromDB,
+  getByCategory,
+  getById,
+};
