@@ -139,7 +139,7 @@ const getById = async (id: string) => {
 };
 
 const updateById = async (id: string, payload: Partial<Book>) => {
-  const isBookExists = await prisma.user.findUnique({
+  const isBookExists = await prisma.book.findUnique({
     where: {
       id: id,
     },
@@ -153,10 +153,34 @@ const updateById = async (id: string, payload: Partial<Book>) => {
   return result;
 };
 
+const deleteById = async (id: string) => {
+  const isBookExists = await prisma.book.findUnique({
+    where: {
+      id: id,
+    },
+  });
+  if (!isBookExists)
+    throw new ApiError(httpStatus.NOT_EXTENDED, 'Book not found with this id');
+  const result = await prisma.book.delete({
+    where: { id: id },
+    select: {
+      id: true,
+      title: true,
+      author: true,
+      genre: true,
+      price: true,
+      publicationDate: true,
+      categoryId: true,
+    },
+  });
+  return result;
+};
+
 export const BookService = {
   insertIntoDB,
   getAllFromDB,
   getByCategory,
   getById,
   updateById,
+  deleteById,
 };
