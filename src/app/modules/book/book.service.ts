@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Book, Prisma } from '@prisma/client';
+import httpStatus from 'http-status';
+import ApiError from '../../../errors/ApiError';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IPaginationOptions } from '../../../interfaces/pagination';
 import prisma from '../../../shared/prisma';
@@ -136,9 +138,25 @@ const getById = async (id: string) => {
   return result;
 };
 
+const updateById = async (id: string, payload: Partial<Book>) => {
+  const isBookExists = await prisma.user.findUnique({
+    where: {
+      id: id,
+    },
+  });
+  if (!isBookExists)
+    throw new ApiError(httpStatus.NOT_EXTENDED, 'Book not found with this id');
+  const result = await prisma.book.update({
+    where: { id: id },
+    data: payload,
+  });
+  return result;
+};
+
 export const BookService = {
   insertIntoDB,
   getAllFromDB,
   getByCategory,
   getById,
+  updateById,
 };
