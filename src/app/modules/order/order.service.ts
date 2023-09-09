@@ -22,6 +22,23 @@ const insertIntoDB = async (
   return result;
 };
 
+const getAllFromDB = async (user: JwtPayload | null) => {
+  if (!user) throw new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized access');
+  if (user.role === 'admin') {
+    const result = await prisma.order.findMany();
+    return result;
+  }
+  if (user.role === 'customer') {
+    const result = await prisma.order.findMany({
+      where: {
+        userId: user.userId,
+      },
+    });
+    return result;
+  }
+};
+
 export const OrderService = {
   insertIntoDB,
+  getAllFromDB,
 };

@@ -17,6 +17,19 @@ const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
+  const user = req?.user;
+
+  const result = await OrderService.getAllFromDB(user);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Orders retrieved successfully',
+    data: result,
+  });
+});
+
 export const OrderController = {
   insertIntoDB,
+  getAllFromDB,
 };

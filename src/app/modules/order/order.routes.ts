@@ -11,4 +11,10 @@ router.post(
   OrderController.insertIntoDB,
 );
 
+router.get(
+  '/',
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.CUSTOMER),
+  OrderController.getAllFromDB,
+);
+
 export const OrderRoutes = router;
