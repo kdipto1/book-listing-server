@@ -37,7 +37,7 @@ const getAllFromDB = async (
     andConditions.push({
       AND: {
         price: {
-          gte: minPrice,
+          gte: Number(minPrice),
         },
       },
     });
@@ -46,7 +46,7 @@ const getAllFromDB = async (
     andConditions.push({
       AND: {
         price: {
-          lte: maxPrice,
+          lte: Number(maxPrice),
         },
       },
     });
@@ -130,7 +130,7 @@ const getByCategory = async (id: string, options: IPaginationOptions) => {
 };
 
 const getById = async (id: string) => {
-  const result = await prisma.book.delete({
+  const result = await prisma.book.findUniqueOrThrow({
     where: {
       id: id,
     },

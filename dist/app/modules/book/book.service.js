@@ -53,7 +53,7 @@ const getAllFromDB = (filters, options) => __awaiter(void 0, void 0, void 0, fun
         andConditions.push({
             AND: {
                 price: {
-                    gte: minPrice,
+                    gte: Number(minPrice),
                 },
             },
         });
@@ -62,7 +62,7 @@ const getAllFromDB = (filters, options) => __awaiter(void 0, void 0, void 0, fun
         andConditions.push({
             AND: {
                 price: {
-                    lte: maxPrice,
+                    lte: Number(maxPrice),
                 },
             },
         });

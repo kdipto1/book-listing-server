@@ -51,7 +51,7 @@ const getById = async (id: string, user: JwtPayload | null) => {
   if (user.role === 'customer') {
     const result = await prisma.order.findUniqueOrThrow({
       where: {
-        id: id,
+        id,
         userId: user.userId,
       },
     });

@@ -27,6 +27,7 @@ const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
   ]);
 
   const options = pick(req.query, ['page', 'size', 'sortBy', 'sortOrder']);
+  // console.log(req.params);
   const result = await BookService.getAllFromDB(filters, options);
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -45,7 +46,7 @@ const getByCategory = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Books fetched successfully!',
+    message: 'Books with associated category data fetched successfully!',
     data: result,
   });
 });

@@ -38,6 +38,7 @@ const getAllFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
         'category',
     ]);
     const options = (0, pick_1.default)(req.query, ['page', 'size', 'sortBy', 'sortOrder']);
+    // console.log(req.params);
     const result = yield book_service_1.BookService.getAllFromDB(filters, options);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
@@ -52,7 +53,7 @@ const getByCategory = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: 'Books fetched successfully!',
+        message: 'Books with associated category data fetched successfully!',
         data: result,
     });
 }));

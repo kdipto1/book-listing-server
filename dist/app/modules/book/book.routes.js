@@ -11,7 +11,7 @@ const book_controller_1 = require("./book.controller");
 const router = express_1.default.Router();
 router.post('/create-book', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN), book_controller_1.BookController.insertIntoDB);
 router.get('/', book_controller_1.BookController.getAllFromDB);
-router.get('/:categoryId/category', book_controller_1.BookController.getAllFromDB);
+router.get('/:categoryId/category', book_controller_1.BookController.getByCategory);
 router.get('/:id', book_controller_1.BookController.getById);
 router.patch('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN), book_controller_1.BookController.updateById);
 router.delete('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN), book_controller_1.BookController.deleteById);
