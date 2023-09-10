@@ -133,7 +133,7 @@ const getByCategory = (id, options) => __awaiter(void 0, void 0, void 0, functio
     };
 });
 const getById = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield prisma_1.default.book.delete({
+    const result = yield prisma_1.default.book.findUniqueOrThrow({
         where: {
             id: id,
         },

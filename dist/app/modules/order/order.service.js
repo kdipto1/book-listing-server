@@ -60,7 +60,7 @@ const getById = (id, user) => __awaiter(void 0, void 0, void 0, function* () {
     if (user.role === 'customer') {
         const result = yield prisma_1.default.order.findUniqueOrThrow({
             where: {
-                id: id,
+                id,
                 userId: user.userId,
             },
         });
