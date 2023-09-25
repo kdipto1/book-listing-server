@@ -26,13 +26,18 @@ const insertIntoDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
         data: result,
     });
 }));
-const signin = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield auth_service_1.AuthService.signin(req.body);
-    (0, sendResponse_1.default)(res, {
-        statusCode: http_status_1.default.OK,
-        success: true,
-        message: 'User signin successfully!',
-        data: result,
-    });
+const signin = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield auth_service_1.AuthService.signin(req.body);
+        res.status(200).json({
+            statusCode: http_status_1.default.OK,
+            success: true,
+            message: 'User signin successfully!',
+            token: result,
+        });
+    }
+    catch (error) {
+        next(error);
+    }
 }));
 exports.AuthController = { insertIntoDB, signin };
