@@ -84,6 +84,13 @@ const deleteById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     });
     if (!isUserExists)
         throw new ApiError_1.default(http_status_1.default.NOT_EXTENDED, 'User not found with this id');
+    if (isUserExists && isUserExists.role === 'customer') {
+        yield prisma_1.default.order.deleteMany({
+            where: {
+                userId: isUserExists.id,
+            },
+        });
+    }
     const result = yield prisma_1.default.user.delete({
         where: {
             id: id,

@@ -74,6 +74,13 @@ const deleteById = async (id: string) => {
   });
   if (!isUserExists)
     throw new ApiError(httpStatus.NOT_EXTENDED, 'User not found with this id');
+  if (isUserExists && isUserExists.role === 'customer') {
+    await prisma.order.deleteMany({
+      where: {
+        userId: isUserExists.id,
+      },
+    });
+  }
   const result = await prisma.user.delete({
     where: {
       id: id,
